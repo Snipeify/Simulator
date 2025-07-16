@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fake Money Simulator</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+    }
+
+    .container {
+      margin-top: 60px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      overflow: hidden;
+      width: 360px;
+    }
+
+    .tabs {
+      display: flex;
+      background-color: #222;
+    }
+
+    .tab {
+      flex: 1;
+      padding: 14px;
+      text-align: center;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .tab.active {
+      background-color: #007aff;
+    }
+
+    .balance-area {
+      padding: 30px;
+      text-align: center;
+    }
+
+    .logo {
+      height: 40px;
+      margin-bottom: 15px;
+    }
+
+    .balance {
+      font-size: 28px;
+      font-weight: bold;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .add-btn {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #00c851;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .add-btn:hover {
+      background-color: #009e3e;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="tabs">
+      <div class="tab active" id="cashapp-tab">CashApp</div>
+      <div class="tab" id="paypal-tab">PayPal</div>
+    </div>
+    <div class="balance-area">
+      <img id="logo" class="logo" src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Cash_App_logo.svg/512px-Cash_App_logo.svg.png" alt="Logo">
+      <div class="balance" id="balance">$0.00</div>
+      <button class="add-btn" onclick="addMoney()">+ Add $100</button>
+    </div>
+  </div>
+
+  <script>
+    let currentApp = "CashApp";
+    let balances = {
+      CashApp: 0,
+      PayPal: 0
+    };
+
+    const balanceEl = document.getElementById("balance");
+    const logoEl = document.getElementById("logo");
+    const cashappTab = document.getElementById("cashapp-tab");
+    const paypalTab = document.getElementById("paypal-tab");
+
+    function updateUI() {
+      balanceEl.textContent = "$" + balances[currentApp].toFixed(2);
+      if (currentApp === "CashApp") {
+        logoEl.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5c/Cash_App_logo.svg/512px-Cash_App_logo.svg.png";
+      } else {
+        logoEl.src = "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b5/PayPal.svg/512px-PayPal.svg.png";
+      }
+
+      cashappTab.classList.toggle("active", currentApp === "CashApp");
+      paypalTab.classList.toggle("active", currentApp === "PayPal");
+    }
+
+    function addMoney() {
+      balances[currentApp] += 100;
+      updateUI();
+    }
+
+    cashappTab.onclick = () => {
+      currentApp = "CashApp";
+      updateUI();
+    };
+
+    paypalTab.onclick = () => {
+      currentApp = "PayPal";
+      updateUI();
+    };
+
+    updateUI();
+  </script>
+</body>
+</html>
